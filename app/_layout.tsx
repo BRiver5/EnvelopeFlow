@@ -30,7 +30,9 @@ export default function RootLayout() {
             headerShown: false,
             contentStyle: { backgroundColor: theme.colors.background },
           }}
-        />
+        >
+          <Stack.Screen name="add-transaction" options={{ presentation: "modal" }} />
+        </Stack>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );
