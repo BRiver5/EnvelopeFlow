@@ -35,6 +35,7 @@ export default function SettingsScreen() {
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
   const [incomeDraft, setIncomeDraft] = useState("");
   const [editing, setEditing] = useState<Envelope | "new" | null>(null);
+  const [newEnvelopeOpenId, setNewEnvelopeOpenId] = useState(0);
   const [confirmingReset, setConfirmingReset] = useState(false);
 
   const load = useCallback(() => {
@@ -123,7 +124,10 @@ export default function SettingsScreen() {
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: theme.spacing.md }}>
           <Text style={{ color: theme.colors.ink, ...theme.typography.subtitle }}>Envelopes</Text>
           <PressableScale
-            onPress={() => setEditing("new")}
+            onPress={() => {
+              setNewEnvelopeOpenId((n) => n + 1);
+              setEditing("new");
+            }}
             style={{ flexDirection: "row", alignItems: "center", gap: 4, paddingVertical: 6, paddingHorizontal: 10, borderRadius: theme.radius.pill, backgroundColor: theme.colors.accent }}
           >
             <Plus size={14} color={theme.colors.onAccent} />
@@ -198,6 +202,7 @@ export default function SettingsScreen() {
       </ScrollView>
 
       <EnvelopeEditorModal
+        key={editing === "new" ? `new-${newEnvelopeOpenId}` : editing === null ? "closed" : editing.id}
         target={editing}
         onClose={() => setEditing(null)}
         onSaved={() => {
@@ -262,16 +267,6 @@ function EnvelopeEditorModal({ target, onClose, onSaved }: { target: Envelope | 
   const [icon, setIcon] = useState(envelope?.icon ?? ICON_KEYS[0]);
   const [targetDraft, setTargetDraft] = useState(envelope ? (envelope.targetCents / 100).toString() : "");
   const [rollover, setRollover] = useState(envelope?.rollover ?? false);
-
-  useFocusEffect(
-    useCallback(() => {
-      setName(envelope?.name ?? "");
-      setIcon(envelope?.icon ?? ICON_KEYS[0]);
-      setTargetDraft(envelope ? (envelope.targetCents / 100).toString() : "");
-      setRollover(envelope?.rollover ?? false);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [target])
-  );
 
   const targetCents = Math.round((parseFloat(targetDraft.replace(",", ".")) || 0) * 100);
   const canSave = name.trim().length > 0 && targetCents > 0;
