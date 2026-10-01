@@ -5,11 +5,11 @@
     "version": "1.0.0",
     "scheme": "envelopeflow",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./release/creo/icon.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./release/creo/icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#FFFFFF"
     },
@@ -22,7 +22,7 @@
       "versionCode": 1,
       "adaptiveIcon": {
         "backgroundImage": "./assets/adaptive-icon-background.png",
-        "foregroundImage": "./assets/adaptive-icon-foreground.png"
+        "foregroundImage": "./release/creo/icon.png"
       },
       "predictiveBackGestureEnabled": false,
       "_comment_blockedPermissions": "Приложение по умолчанию локальное: только уведомления и вибрация. Если конкретному приложению реально нужно что-то из списка ниже — удали строку и напиши рядом, зачем (см. docs/PLAN.template.md, раздел 'Разрешения').",
